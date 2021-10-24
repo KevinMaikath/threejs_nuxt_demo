@@ -12,6 +12,7 @@ import {
     Scene,
     PerspectiveCamera,
     SphereGeometry,
+    Object3D,
 } from "three";
 
 type FrameRequestCallback = (time: number) => void;
@@ -22,12 +23,19 @@ export default class SolarSystem extends Vue {
     scene!: Scene;
     camera!: PerspectiveCamera;
 
+    solarSystem!: Object3D;
+
     sphereGeometry!: SphereGeometry;
     sunMesh!: Mesh;
+
+    earthOrbit!: Object3D;
     earthMesh!: Mesh;
 
+    moonOrbit!: Object3D;
+    moonMesh!: Mesh;
+
     // an array of objects whose rotation to update
-    rotatingObjects: Mesh[] = [];
+    rotatingObjects: (Mesh | Object3D)[] = [];
 
     renderFunc!: FrameRequestCallback;
 
@@ -38,8 +46,18 @@ export default class SolarSystem extends Vue {
         this.setUpCamera();
 
         this.setUpSphereGeometry();
+
+        // The solar system contains the sun and the earth orbit
+        this.setUpSolarSystem();
         this.setUpSun();
+        this.setUpEarthOrbit();
+
+        // The earth orbit contains the earth and the moon orbit
         this.setUpEarth();
+        this.setUpMoonOrbit();
+
+        // The moon orbit contains the moon
+        this.setUpMoon();
 
         this.setUpRenderFunc();
         this.animate();
@@ -75,6 +93,13 @@ export default class SolarSystem extends Vue {
         this.camera.lookAt(0, 0, 0);
     }
 
+    setUpSolarSystem() {
+        const solarSystem = new THREE.Object3D();
+        this.scene.add(solarSystem);
+        this.rotatingObjects.push(solarSystem);
+        this.solarSystem = solarSystem;
+    }
+
     setUpSphereGeometry() {
         // use the same sphere for everything
         const radius = 1;
@@ -92,9 +117,17 @@ export default class SolarSystem extends Vue {
         const sunMesh = new THREE.Mesh(this.sphereGeometry, sunMaterial);
         sunMesh.scale.set(5, 5, 5); // make the sun large
 
-        this.scene.add(sunMesh);
+        this.solarSystem.add(sunMesh);
         this.rotatingObjects.push(sunMesh);
         this.sunMesh = sunMesh;
+    }
+
+    setUpEarthOrbit() {
+        const earthOrbit = new THREE.Object3D();
+        earthOrbit.position.x = 10;
+        this.solarSystem.add(earthOrbit);
+        this.rotatingObjects.push(earthOrbit);
+        this.earthOrbit = earthOrbit;
     }
 
     setUpEarth() {
@@ -103,19 +136,36 @@ export default class SolarSystem extends Vue {
             emissive: 0x112244,
         });
         const earthMesh = new THREE.Mesh(this.sphereGeometry, earthMaterial);
-        earthMesh.scale.set(0.2, 0.2, 0.2);
-        earthMesh.position.x = 2;
 
-        // We add it to the sunMesh instead of the scene to make it rotate around the sun
-        this.sunMesh.add(earthMesh);
+        this.earthOrbit.add(earthMesh);
         this.rotatingObjects.push(earthMesh);
         this.earthMesh = earthMesh;
     }
 
+    setUpMoonOrbit() {
+        const moonOrbit = new THREE.Object3D();
+        moonOrbit.position.x = 2;
+        this.earthOrbit.add(moonOrbit);
+        this.rotatingObjects.push(moonOrbit);
+        this.moonOrbit = moonOrbit;
+    }
+
+    setUpMoon() {
+        const moonMaterial = new THREE.MeshPhongMaterial({
+            color: 0x888888,
+            emissive: 0x222222,
+        });
+        const moonMesh = new THREE.Mesh(this.sphereGeometry, moonMaterial);
+        moonMesh.scale.set(0.5, 0.5, 0.5);
+
+        this.moonOrbit.add(moonMesh);
+        this.rotatingObjects.push(moonMesh);
+        this.moonMesh = moonMesh;
+    }
+
     resizeRendererToDisplaySize() {
         const canvas = this.renderer.domElement;
-        const width = canvas.clientWidth;
-        const height = canvas.clientHeight;
+        const { clientWidth: width, clientHeight: height } = canvas;
         const needResize = canvas.width !== width || canvas.height !== height;
         if (needResize) {
             this.renderer.setSize(width, height, false);
