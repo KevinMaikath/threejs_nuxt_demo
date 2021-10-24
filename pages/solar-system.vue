@@ -13,6 +13,7 @@ import {
     PerspectiveCamera,
     SphereGeometry,
     Object3D,
+    Material,
 } from "three";
 
 type FrameRequestCallback = (time: number) => void;
@@ -58,6 +59,8 @@ export default class SolarSystem extends Vue {
 
         // The moon orbit contains the moon
         this.setUpMoon();
+
+        this.addAxesHelpers();
 
         this.setUpRenderFunc();
         this.animate();
@@ -163,14 +166,13 @@ export default class SolarSystem extends Vue {
         this.moonMesh = moonMesh;
     }
 
-    resizeRendererToDisplaySize() {
-        const canvas = this.renderer.domElement;
-        const { clientWidth: width, clientHeight: height } = canvas;
-        const needResize = canvas.width !== width || canvas.height !== height;
-        if (needResize) {
-            this.renderer.setSize(width, height, false);
-        }
-        return needResize;
+    addAxesHelpers() {
+        this.rotatingObjects.forEach((node) => {
+            const axes = new THREE.AxesHelper();
+            (axes.material as Material).depthTest = false;
+            axes.renderOrder = 1;
+            node.add(axes);
+        });
     }
 
     setUpRenderFunc() {
@@ -191,6 +193,16 @@ export default class SolarSystem extends Vue {
 
             requestAnimationFrame(this.renderFunc.bind(this));
         };
+    }
+
+    resizeRendererToDisplaySize() {
+        const canvas = this.renderer.domElement;
+        const { clientWidth: width, clientHeight: height } = canvas;
+        const needResize = canvas.width !== width || canvas.height !== height;
+        if (needResize) {
+            this.renderer.setSize(width, height, false);
+        }
+        return needResize;
     }
 
     animate() {
