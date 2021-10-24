@@ -13,8 +13,9 @@ import {
     PerspectiveCamera,
     SphereGeometry,
     Object3D,
-    Material,
 } from "three";
+import { GUI } from "dat.gui";
+import { AxisGridHelper } from "~/models/dat-gui";
 
 type FrameRequestCallback = (time: number) => void;
 
@@ -34,6 +35,8 @@ export default class SolarSystem extends Vue {
 
     moonOrbit!: Object3D;
     moonMesh!: Mesh;
+
+    gui!: GUI;
 
     // an array of objects whose rotation to update
     rotatingObjects: (Mesh | Object3D)[] = [];
@@ -60,7 +63,8 @@ export default class SolarSystem extends Vue {
         // The moon orbit contains the moon
         this.setUpMoon();
 
-        this.addAxesHelpers();
+        this.setUpGui();
+        this.addHelpers();
 
         this.setUpRenderFunc();
         this.animate();
@@ -166,13 +170,22 @@ export default class SolarSystem extends Vue {
         this.moonMesh = moonMesh;
     }
 
-    addAxesHelpers() {
-        this.rotatingObjects.forEach((node) => {
-            const axes = new THREE.AxesHelper();
-            (axes.material as Material).depthTest = false;
-            axes.renderOrder = 1;
-            node.add(axes);
-        });
+    setUpGui() {
+        this.gui = new GUI();
+    }
+
+    addHelpers() {
+        this.makeAxisGrid(this.solarSystem, "solarSystem", 25);
+        this.makeAxisGrid(this.sunMesh, "sunMesh");
+        this.makeAxisGrid(this.earthOrbit, "earthOrbit");
+        this.makeAxisGrid(this.earthMesh, "earthMesh");
+        this.makeAxisGrid(this.moonOrbit, "moonOrbit");
+        this.makeAxisGrid(this.moonMesh, "moonMesh");
+    }
+
+    makeAxisGrid(node, label, units?) {
+        const helper = new AxisGridHelper(node, units);
+        this.gui.add(helper, "visible").name(label);
     }
 
     setUpRenderFunc() {

@@ -3,6 +3,7 @@
         <h2>Home</h2>
 
         <nuxt-link to="/cube">Cube</nuxt-link>
+        <nuxt-link to="/solar-system">Solar System</nuxt-link>
     </div>
 </template>
 
