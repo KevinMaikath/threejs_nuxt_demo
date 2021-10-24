@@ -1,9 +1,17 @@
 <template>
-  <Tutorial/>
+    <div>
+        <h2>Home</h2>
+
+        <nuxt-link to="/cube">Cube</nuxt-link>
+    </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue from "vue";
+import Component from "vue-class-component";
 
-export default Vue.extend({})
+@Component
+export default class Home extends Vue {}
 </script>
+
+<style scoped lang="scss"></style>
