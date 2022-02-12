@@ -4,6 +4,11 @@
 
         <nuxt-link to="/cube">Cube</nuxt-link>
         <nuxt-link to="/solar-system">Solar System</nuxt-link>
+
+        <h3>Lessons</h3>
+        <nuxt-link to="/lessons/05-transform-objects"
+            >05 Transform Objects</nuxt-link
+        >
     </div>
 </template>
 

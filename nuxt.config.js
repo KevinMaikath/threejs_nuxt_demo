@@ -1,7 +1,7 @@
 export default {
     // Global page headers: https://go.nuxtjs.dev/config-head
     head: {
-        title: "vue_demo",
+        title: "threejs_nuxt_demo",
         htmlAttrs: {
             lang: "en",
         },
