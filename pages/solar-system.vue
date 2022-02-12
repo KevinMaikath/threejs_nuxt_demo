@@ -14,7 +14,6 @@ import {
     SphereGeometry,
     Object3D,
 } from "three";
-import { GUI } from "dat.gui";
 import { AxisGridHelper } from "~/models/dat-gui";
 
 type FrameRequestCallback = (time: number) => void;
@@ -36,7 +35,7 @@ export default class SolarSystem extends Vue {
     moonOrbit!: Object3D;
     moonMesh!: Mesh;
 
-    gui!: GUI;
+    gui!: any;
 
     // an array of objects whose rotation to update
     rotatingObjects: (Mesh | Object3D)[] = [];
@@ -171,6 +170,9 @@ export default class SolarSystem extends Vue {
     }
 
     setUpGui() {
+        // The library dat.gui has to be imported locally to avoid the error
+        // "window is not defined" on every page reload
+        const { GUI } = require("dat.gui");
         this.gui = new GUI();
     }
 
