@@ -3,38 +3,20 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import Component from "vue-class-component";
 import * as THREE from "three";
-import {
-    AxesHelper,
-    Group,
-    Mesh,
-    PerspectiveCamera,
-    Scene,
-    WebGLRenderer,
-} from "three";
+import { AxesHelper, Group, Mesh } from "three";
+import LessonSetupMixin from "~/mixins/lesson-setup.vue";
 
 @Component
-export default class TransformObjectsPage extends Vue {
-    renderer!: WebGLRenderer;
-    scene!: Scene;
-    camera!: PerspectiveCamera;
-
+export default class TransformObjectsPage extends LessonSetupMixin {
     cube!: Mesh;
     axesHelper!: AxesHelper;
 
     group!: Group;
 
-    readonly sizes = {
-        width: 1000,
-        height: 750,
-    };
-
     mounted() {
-        this.setUpRenderer();
-        this.setUpScene();
-        this.setUpCamera();
+        this.setUp();
 
         // this.addCube();
 
@@ -52,39 +34,6 @@ export default class TransformObjectsPage extends Vue {
 
         this.setUpGroup();
         this.moveGroup();
-    }
-
-    setUpRenderer() {
-        const canvas = this.$refs.canvas as HTMLCanvasElement;
-        this.renderer = new THREE.WebGLRenderer({ canvas });
-
-        const { width, height } = this.sizes;
-        this.renderer.setSize(width, height);
-    }
-
-    setUpScene() {
-        this.scene = new THREE.Scene();
-    }
-
-    setUpCamera() {
-        const { width, height } = this.sizes;
-        this.camera = new THREE.PerspectiveCamera(75, width / height);
-        this.camera.position.z = 3;
-        this.scene.add(this.camera);
-    }
-
-    addCube() {
-        const geometry = new THREE.BoxGeometry();
-        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-        this.cube = new THREE.Mesh(geometry, material);
-        this.scene.add(this.cube);
-    }
-
-    /**
-     * Render the scene. I can' call this method "render" because that's something used in Vue
-     */
-    play() {
-        this.renderer.render(this.scene, this.camera);
     }
 
     moveCube() {

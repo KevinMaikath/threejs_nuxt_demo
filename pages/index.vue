@@ -9,6 +9,7 @@
         <nuxt-link to="/lessons/05-transform-objects"
             >05 Transform Objects</nuxt-link
         >
+        <nuxt-link to="/lessons/06-animations">06 Animations</nuxt-link>
     </div>
 </template>
 
