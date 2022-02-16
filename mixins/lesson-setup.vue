@@ -2,15 +2,20 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import * as THREE from "three";
-import { Object3D, PerspectiveCamera, Scene, WebGLRenderer } from "three";
+import { Camera, Object3D, Scene, WebGLRenderer } from "three";
 
 export type FrameRequestCallback = (time: number) => void;
 
+/**
+ * Handle most of the set up for Three.js
+ *
+ * Remember to put a <canvas ref="canvas"></canvas> in your Template
+ */
 @Component
 export default class LessonSetupMixin extends Vue {
     renderer!: WebGLRenderer;
     scene!: Scene;
-    camera!: PerspectiveCamera;
+    camera!: Camera;
 
     cube!: Object3D;
 
@@ -27,7 +32,7 @@ export default class LessonSetupMixin extends Vue {
         this.setUpCamera();
     }
 
-    private setUpRenderer() {
+    protected setUpRenderer() {
         const canvas = this.$refs.canvas as HTMLCanvasElement;
         this.renderer = new THREE.WebGLRenderer({ canvas });
 
@@ -35,11 +40,11 @@ export default class LessonSetupMixin extends Vue {
         this.renderer.setSize(width, height);
     }
 
-    private setUpScene() {
+    protected setUpScene() {
         this.scene = new THREE.Scene();
     }
 
-    private setUpCamera() {
+    protected setUpCamera() {
         const { width, height } = this.sizes;
         this.camera = new THREE.PerspectiveCamera(75, width / height);
         this.camera.position.z = 3;

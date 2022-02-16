@@ -10,7 +10,7 @@ import { gsap } from "gsap";
 import LessonSetupMixin from "~/mixins/lesson-setup.vue";
 
 @Component
-export default class AnimationsPage extends LessonSetupMixin {
+export default class AnimationsLesson extends LessonSetupMixin {
     // We save the last time (Date.now()) here to be able to access it in the next
     // animation() iteration
     lastTime: number = 0;
@@ -23,6 +23,7 @@ export default class AnimationsPage extends LessonSetupMixin {
 
         this.play();
 
+        // this.lastTime = Date.now();
         this.setUpClock();
         // this.setUpGsap();
 
@@ -31,8 +32,6 @@ export default class AnimationsPage extends LessonSetupMixin {
     }
 
     setUpAnimation() {
-        this.lastTime = Date.now();
-
         this.animation = this.clockAnimation;
     }
 

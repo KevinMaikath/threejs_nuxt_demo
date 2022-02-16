@@ -9,7 +9,7 @@ import { AxesHelper, Group, Mesh } from "three";
 import LessonSetupMixin from "~/mixins/lesson-setup.vue";
 
 @Component
-export default class TransformObjectsPage extends LessonSetupMixin {
+export default class TransformObjectsLesson extends LessonSetupMixin {
     cube!: Mesh;
     axesHelper!: AxesHelper;
 
