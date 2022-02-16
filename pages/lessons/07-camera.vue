@@ -121,7 +121,8 @@ export default class CameraLesson extends LessonSetupMixin {
     setUpOrbitControls() {
         if (!this.$refs.canvas) return;
 
-        this.controls = new OrbitControls(
+        const c = require("three/examples/jsm/controls/OrbitControls");
+        this.controls = new c.OrbitControls(
             this.camera,
             this.$refs.canvas as HTMLElement
         );
@@ -150,7 +151,7 @@ export default class CameraLesson extends LessonSetupMixin {
             //
             // this.camera.position.y = this.cursorPosition.y * -2;
 
-            // this.controls.update();
+            this.controls.update();
 
             this.camera.lookAt(this.cube.position);
         };

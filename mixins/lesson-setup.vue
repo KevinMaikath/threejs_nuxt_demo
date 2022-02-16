@@ -21,7 +21,7 @@ export default class LessonSetupMixin extends Vue {
 
     private _animation?: FrameRequestCallback;
 
-    readonly sizes = {
+    sizes = {
         width: 1000,
         height: 750,
     };

@@ -1,0 +1,124 @@
+<template>
+    <canvas ref="canvas"></canvas>
+</template>
+
+<script lang="ts">
+import Component from "vue-class-component";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { PerspectiveCamera } from "three";
+import LessonSetupMixin from "~/mixins/lesson-setup.vue";
+
+declare global {
+    interface Document {
+        webkitFullscreenElement: boolean;
+        webkitExitFullscreen: () => {};
+    }
+
+    interface HTMLCanvasElement {
+        webkitRequestFullscreen: () => {};
+    }
+}
+
+@Component({
+    layout: "fullscreen",
+})
+export default class ResizingLesson extends LessonSetupMixin {
+    controls!: OrbitControls;
+    camera!: PerspectiveCamera;
+    canvas!: HTMLCanvasElement;
+
+    mounted() {
+        this.canvas = this.$refs.canvas as HTMLCanvasElement;
+        this.setUpSizes();
+
+        this.setUp();
+        this.addCube();
+
+        this.setUpResizeListener();
+        this.setUpDoubleClickListener();
+
+        this.setUpOrbitControls();
+
+        this.setUpAnimation();
+        this.startAnimation();
+    }
+
+    destroyed() {
+        this.removeListeners();
+    }
+
+    setUpSizes() {
+        this.sizes = {
+            width: window.innerWidth,
+            height: window.innerHeight,
+        };
+    }
+
+    setUpResizeListener() {
+        window.addEventListener("resize", () => {
+            this.setUpSizes();
+
+            this.camera.aspect = this.sizes.width / this.sizes.height;
+            this.camera.updateProjectionMatrix();
+            //
+            this.renderer.setSize(this.sizes.width, this.sizes.height);
+
+            // You can increase the pixelRatio to improve the image quality
+            this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        });
+    }
+
+    setUpDoubleClickListener() {
+        window.addEventListener("dblclick", () => {
+            // This has compatibility with Safari (webkit)
+            const fullscreenElement =
+                document.fullscreenElement || document.webkitFullscreenElement;
+
+            if (!fullscreenElement) {
+                if (this.canvas.requestFullscreen) {
+                    // Avoid "Uncaught in promise" error, because we truly don't care about it
+                    this.canvas.requestFullscreen().catch(() => {});
+                } else if (this.canvas.webkitRequestFullscreen) {
+                    this.canvas.webkitRequestFullscreen();
+                }
+            } else if (document.exitFullscreen) {
+                document.exitFullscreen().catch(() => {});
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            }
+        });
+    }
+
+    removeListeners() {
+        window.removeEventListener("resize", () => {});
+        window.removeEventListener("dblclick", () => {});
+    }
+
+    setUpOrbitControls() {
+        if (!this.$refs.canvas) return;
+
+        const c = require("three/examples/jsm/controls/OrbitControls");
+
+        this.controls = new c.OrbitControls(
+            this.camera,
+            this.$refs.canvas as HTMLElement
+        );
+
+        this.controls.enableDamping = true;
+    }
+
+    setUpAnimation() {
+        this.animation = (_: number) => {
+            // const elapsedTime = this.clock.getElapsedTime();
+            this.controls.update();
+            this.camera.lookAt(this.cube.position);
+        };
+    }
+}
+</script>
+
+<style scoped lang="scss">
+canvas {
+    max-height: 100%;
+}
+</style>
