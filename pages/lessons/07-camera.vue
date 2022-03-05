@@ -9,6 +9,8 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import LessonSetupMixin from "~/mixins/lesson-setup.vue";
 
+type LessonListener = "mousemove";
+
 @Component
 export default class CameraLesson extends LessonSetupMixin {
     clock!: Clock;
@@ -19,6 +21,10 @@ export default class CameraLesson extends LessonSetupMixin {
     };
 
     controls!: OrbitControls;
+
+    listeners: { [key in LessonListener]: (event?: any) => void } = {
+        mousemove: () => {},
+    };
 
     mounted() {
         this.setUp();
@@ -106,16 +112,17 @@ export default class CameraLesson extends LessonSetupMixin {
     }
 
     setUpMouseListener() {
-        window.addEventListener("mousemove", (event) => {
+        this.listeners.mousemove = (event) => {
             this.cursorPosition.x =
                 (event.clientX / this.sizes.width - 0.5) * 2;
             this.cursorPosition.y =
                 (event.clientY / this.sizes.height - 0.5) * 2;
-        });
+        };
+        window.addEventListener("mousemove", this.listeners.mousemove);
     }
 
     removeMouseListener() {
-        window.removeEventListener("mousemove", () => {});
+        window.removeEventListener("mousemove", this.listeners.mousemove);
     }
 
     setUpOrbitControls() {

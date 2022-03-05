@@ -19,6 +19,8 @@ declare global {
     }
 }
 
+type LessonListener = "resize" | "dblclick";
+
 @Component({
     layout: "fullscreen",
 })
@@ -26,6 +28,11 @@ export default class ResizingLesson extends LessonSetupMixin {
     controls!: OrbitControls;
     camera!: PerspectiveCamera;
     canvas!: HTMLCanvasElement;
+
+    listeners: { [key in LessonListener]: () => void } = {
+        resize: () => {},
+        dblclick: () => {},
+    };
 
     mounted() {
         this.canvas = this.$refs.canvas as HTMLCanvasElement;
@@ -55,21 +62,22 @@ export default class ResizingLesson extends LessonSetupMixin {
     }
 
     setUpResizeListener() {
-        window.addEventListener("resize", () => {
+        this.listeners.resize = () => {
             this.setUpSizes();
 
             this.camera.aspect = this.sizes.width / this.sizes.height;
             this.camera.updateProjectionMatrix();
-            //
+
             this.renderer.setSize(this.sizes.width, this.sizes.height);
 
             // You can increase the pixelRatio to improve the image quality
             this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        });
+        };
+        window.addEventListener("resize", this.listeners.resize);
     }
 
     setUpDoubleClickListener() {
-        window.addEventListener("dblclick", () => {
+        this.listeners.dblclick = () => {
             // This has compatibility with Safari (webkit)
             const fullscreenElement =
                 document.fullscreenElement || document.webkitFullscreenElement;
@@ -86,12 +94,13 @@ export default class ResizingLesson extends LessonSetupMixin {
             } else if (document.webkitExitFullscreen) {
                 document.webkitExitFullscreen();
             }
-        });
+        };
+        window.addEventListener("dblclick", this.listeners.dblclick);
     }
 
     removeListeners() {
-        window.removeEventListener("resize", () => {});
-        window.removeEventListener("dblclick", () => {});
+        window.removeEventListener("resize", this.listeners.resize);
+        window.removeEventListener("dblclick", this.listeners.dblclick);
     }
 
     setUpOrbitControls() {
