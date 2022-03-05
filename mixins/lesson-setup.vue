@@ -51,6 +51,13 @@ export default class LessonSetupMixin extends Vue {
         this.scene.add(this.camera);
     }
 
+    protected setUpSizes() {
+        this.sizes = {
+            width: window.innerWidth,
+            height: window.innerHeight,
+        };
+    }
+
     /**
      * Render the scene. I can' call this method "render" because that's something used in Vue
      */
