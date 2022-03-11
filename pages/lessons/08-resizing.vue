@@ -106,9 +106,11 @@ export default class ResizingLesson extends LessonSetupMixin {
     setUpOrbitControls() {
         if (!this.$refs.canvas) return;
 
-        const c = require("three/examples/jsm/controls/OrbitControls");
+        const {
+            OrbitControls,
+        } = require("three/examples/jsm/controls/OrbitControls");
 
-        this.controls = new c.OrbitControls(
+        this.controls = new OrbitControls(
             this.camera,
             this.$refs.canvas as HTMLElement
         );

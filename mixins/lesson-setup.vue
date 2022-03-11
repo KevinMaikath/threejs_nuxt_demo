@@ -2,7 +2,7 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import * as THREE from "three";
-import { Camera, Object3D, Scene, WebGLRenderer } from "three";
+import { Camera, Mesh, Scene, WebGLRenderer } from "three";
 
 export type FrameRequestCallback = (time: number) => void;
 
@@ -17,7 +17,7 @@ export default class LessonSetupMixin extends Vue {
     scene!: Scene;
     camera!: Camera;
 
-    cube!: Object3D;
+    cube!: Mesh;
 
     private _animation?: FrameRequestCallback;
 
