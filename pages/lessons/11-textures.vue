@@ -68,7 +68,7 @@ export default class TexturesLesson extends LessonSetupMixin {
      */
     loadColorImageJS() {
         this.colorImage = new Image();
-        this.colorImage.src = "/11-textures/door/color.jpg";
+        this.colorImage.src = "/textures/door/color.jpg";
 
         // We already set the image to the texture because we don't know how much time
         // will it take to load
@@ -112,34 +112,30 @@ export default class TexturesLesson extends LessonSetupMixin {
      */
     loadColorImageTextureLoader() {
         this.colorTexture = this.textureLoader.load(
-            // "/11-textures/door/color.jpg"
-            // "/11-textures/checkerboard-1024x1024.png"
-            "/11-textures/checkerboard-8x8.png"
+            // "/textures/door/color.jpg"
+            // "/textures/checkerboard-1024x1024.png"
+            "/textures/checkerboard-8x8.png"
             // We can add onLoad, onProgress and onError callbacks
         );
     }
 
     loadAllTextures() {
-        this.colorTexture = this.textureLoader.load(
-            "/11-textures/door/color.jpg"
-        );
-        this.alphaTexture = this.textureLoader.load(
-            "/11-textures/door/alpha.jpg"
-        );
+        this.colorTexture = this.textureLoader.load("/textures/door/color.jpg");
+        this.alphaTexture = this.textureLoader.load("/textures/door/alpha.jpg");
         this.ambientOcclusionTexture = this.textureLoader.load(
-            "/11-textures/door/ambientOcclusion.jpg"
+            "/textures/door/ambientOcclusion.jpg"
         );
         this.heightTexture = this.textureLoader.load(
-            "/11-textures/door/height.jpg"
+            "/textures/door/height.jpg"
         );
         this.metalnessTexture = this.textureLoader.load(
-            "/11-textures/door/metalness.jpg"
+            "/textures/door/metalness.jpg"
         );
         this.normalTexture = this.textureLoader.load(
-            "/11-textures/door/normal.jpg"
+            "/textures/door/normal.jpg"
         );
         this.roughnessTexture = this.textureLoader.load(
-            "/11-textures/door/roughness.jpg"
+            "/textures/door/roughness.jpg"
         );
     }
 
