@@ -99,7 +99,7 @@ export default class LessonSetupMixin extends Vue {
 
     addCube() {
         const geometry = new THREE.BoxGeometry();
-        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+        const material = new THREE.MeshBasicMaterial();
         this.cube = new THREE.Mesh(geometry, material);
         this.scene.add(this.cube);
     }
