@@ -381,21 +381,6 @@ export default class MaterialsLesson extends LessonSetupMixin {
         (this.material as MeshStandardMaterial).envMap = environmentMap;
     }
 
-    setUpOrbitControls() {
-        if (!this.$refs.canvas) return;
-
-        const {
-            OrbitControls,
-        } = require("three/examples/jsm/controls/OrbitControls");
-
-        this.controls = new OrbitControls(
-            this.camera,
-            this.$refs.canvas as HTMLElement
-        );
-
-        this.controls.enableDamping = true;
-    }
-
     setUpClock() {
         this.clock = new THREE.Clock();
     }

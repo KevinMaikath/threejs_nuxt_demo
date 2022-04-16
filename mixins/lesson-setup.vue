@@ -3,6 +3,7 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import * as THREE from "three";
 import { Camera, Mesh, Scene, WebGLRenderer } from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 export type FrameRequestCallback = (time: number) => void;
 
@@ -18,6 +19,7 @@ export default class LessonSetupMixin extends Vue {
     camera!: Camera;
 
     cube!: Mesh;
+    controls?: OrbitControls;
 
     private _animation?: FrameRequestCallback;
 
@@ -56,6 +58,21 @@ export default class LessonSetupMixin extends Vue {
             width: window.innerWidth,
             height: window.innerHeight,
         };
+    }
+
+    protected setUpOrbitControls() {
+        if (!this.$refs.canvas) return;
+
+        const {
+            OrbitControls,
+        } = require("three/examples/jsm/controls/OrbitControls");
+
+        this.controls = new OrbitControls(
+            this.camera,
+            this.$refs.canvas as HTMLElement
+        );
+
+        this.controls!.enableDamping = true;
     }
 
     /**

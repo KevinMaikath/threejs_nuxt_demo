@@ -36,21 +36,6 @@ export default class DebugLesson extends LessonSetupMixin {
         this.startAnimation();
     }
 
-    setUpOrbitControls() {
-        if (!this.$refs.canvas) return;
-
-        const {
-            OrbitControls,
-        } = require("three/examples/jsm/controls/OrbitControls");
-
-        this.controls = new OrbitControls(
-            this.camera,
-            this.$refs.canvas as HTMLElement
-        );
-
-        this.controls.enableDamping = true;
-    }
-
     setUpGui() {
         // The library dat.gui has to be imported locally to avoid the error
         // "window is not defined" on every page reload

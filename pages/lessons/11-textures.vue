@@ -203,21 +203,6 @@ export default class TexturesLesson extends LessonSetupMixin {
         this.scene.add(this.cube);
     }
 
-    setUpOrbitControls() {
-        if (!this.$refs.canvas) return;
-
-        const {
-            OrbitControls,
-        } = require("three/examples/jsm/controls/OrbitControls");
-
-        this.controls = new OrbitControls(
-            this.camera,
-            this.$refs.canvas as HTMLElement
-        );
-
-        this.controls.enableDamping = true;
-    }
-
     setUpAnimation() {
         this.animation = (_: number) => {
             this.controls.update();

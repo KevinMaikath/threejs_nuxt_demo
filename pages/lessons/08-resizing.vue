@@ -103,21 +103,6 @@ export default class ResizingLesson extends LessonSetupMixin {
         window.removeEventListener("dblclick", this.listeners.dblclick);
     }
 
-    setUpOrbitControls() {
-        if (!this.$refs.canvas) return;
-
-        const {
-            OrbitControls,
-        } = require("three/examples/jsm/controls/OrbitControls");
-
-        this.controls = new OrbitControls(
-            this.camera,
-            this.$refs.canvas as HTMLElement
-        );
-
-        this.controls.enableDamping = true;
-    }
-
     setUpAnimation() {
         this.animation = (_: number) => {
             // const elapsedTime = this.clock.getElapsedTime();
