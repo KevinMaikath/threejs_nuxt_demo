@@ -15,5 +15,8 @@ export default class FullscreenLayout extends Vue {}
 <style scoped lang="scss">
 #fullscreen_layout {
     max-height: 100vh;
+
+    // This will avoid showing the scroll bars when the canvas is has full width/height
+    overflow: hidden;
 }
 </style>

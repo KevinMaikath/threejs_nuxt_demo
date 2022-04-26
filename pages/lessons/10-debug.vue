@@ -1,5 +1,5 @@
 <template>
-    <canvas ref="canvas"></canvas>
+    <canvas ref="canvas" class="full-screen"></canvas>
 </template>
 
 <script lang="ts">
@@ -93,9 +93,3 @@ export default class DebugLesson extends LessonSetupMixin {
     }
 }
 </script>
-
-<style scoped lang="scss">
-canvas {
-    max-height: 100%;
-}
-</style>

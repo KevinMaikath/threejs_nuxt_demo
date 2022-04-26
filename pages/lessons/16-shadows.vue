@@ -1,5 +1,5 @@
 <template>
-    <canvas ref="canvas"></canvas>
+    <canvas ref="canvas" class="full-screen"></canvas>
 </template>
 
 <script lang="ts">
@@ -10,6 +10,7 @@ import {
     AmbientLight,
     CameraHelper,
     DirectionalLight,
+    Material,
     Mesh,
     MeshStandardMaterial,
     PointLight,
@@ -375,12 +376,10 @@ export default class ShadowsLesson extends LessonSetupMixin {
                 // Move the sphere shadow with the sphere
                 this.sphereShadowPlane.position.x = this.sphere.position.x;
                 this.sphereShadowPlane.position.z = this.sphere.position.z;
-                this.sphereShadowPlane.material.opacity =
+                (this.sphereShadowPlane.material as Material).opacity =
                     1 - this.sphere.position.y;
             }
         };
     }
 }
 </script>
-
-<style scoped lang="scss"></style>

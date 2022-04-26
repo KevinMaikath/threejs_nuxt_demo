@@ -2,7 +2,7 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import * as THREE from "three";
-import { Camera, Mesh, Scene, WebGLRenderer } from "three";
+import { Mesh, PerspectiveCamera, Scene, WebGLRenderer } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 export type FrameRequestCallback = (time: number) => void;
@@ -12,14 +12,18 @@ export type FrameRequestCallback = (time: number) => void;
  *
  * Remember to put a <canvas ref="canvas"></canvas> in your Template
  */
-@Component
+@Component({
+    layout: "fullscreen",
+})
 export default class LessonSetupMixin extends Vue {
     renderer!: WebGLRenderer;
     scene!: Scene;
-    camera!: Camera;
+    camera!: PerspectiveCamera;
 
     cube!: Mesh;
     controls?: OrbitControls;
+
+    resizeListener?: () => void;
 
     private _animation?: FrameRequestCallback;
 
@@ -28,10 +32,14 @@ export default class LessonSetupMixin extends Vue {
         height: 750,
     };
 
-    setUp() {
+    setUp(resize: boolean = true) {
         this.setUpRenderer();
         this.setUpScene();
         this.setUpCamera();
+
+        if (resize) {
+            this.setUpResizing();
+        }
     }
 
     protected setUpRenderer() {
@@ -73,6 +81,33 @@ export default class LessonSetupMixin extends Vue {
         );
 
         this.controls!.enableDamping = true;
+    }
+
+    /**
+     * Create the resize listener callback and assign it to the window resize event.
+     */
+    setUpResizing() {
+        this.resizeListener = () => {
+            this.setUpSizes();
+
+            this.camera.aspect = this.sizes.width / this.sizes.height;
+            this.camera.updateProjectionMatrix();
+
+            this.renderer.setSize(this.sizes.width, this.sizes.height);
+
+            // You can increase the pixelRatio to improve the image quality
+            this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        };
+        window.addEventListener("resize", this.resizeListener);
+    }
+
+    /**
+     * Clean listeners.
+     */
+    destroy() {
+        if (this.resizeListener) {
+            window.removeEventListener("resize", this.resizeListener);
+        }
     }
 
     /**
