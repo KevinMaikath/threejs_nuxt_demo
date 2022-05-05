@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import Component from "vue-class-component";
-import { Clock } from "three";
+import { Clock, OrthographicCamera, PerspectiveCamera } from "three";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import LessonSetupMixin from "~/mixins/lesson-setup.vue";
@@ -21,6 +21,9 @@ export default class CameraLesson extends LessonSetupMixin {
     };
 
     controls!: OrbitControls;
+
+    // @ts-ignore
+    camera!: OrthographicCamera | PerspectiveCamera;
 
     listeners: { [key in LessonListener]: (event?: any) => void } = {
         mousemove: () => {},

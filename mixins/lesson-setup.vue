@@ -33,13 +33,15 @@ export default class LessonSetupMixin extends Vue {
     };
 
     setUp(resize: boolean = true) {
+        // Set up the window size before creating the renderer
+        if (resize) {
+            this.setUpSizes();
+            this.setUpResizing();
+        }
+
         this.setUpRenderer();
         this.setUpScene();
         this.setUpCamera();
-
-        if (resize) {
-            this.setUpResizing();
-        }
     }
 
     protected setUpRenderer() {
