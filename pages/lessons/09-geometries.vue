@@ -94,12 +94,15 @@ export default class GeometriesLesson extends LessonSetupMixin {
     addMultipleTriangles(numberOfTriangles: number) {
         const geometry = new THREE.BufferGeometry();
 
-        // Each triangle needs 3 vertices, and each vertex needs 3 values
+        // Each triangle needs 3 vertices, and each vertex needs 3 values (x,y,z)
         const arrayLength = numberOfTriangles * 3 * 3;
         const positions = new Float32Array(arrayLength);
 
+        const size = 3;
+
         for (let i = 0; i < arrayLength; i += 1) {
-            positions[i] = (Math.random() - 0.5) * 3;
+            // "-0.5" will set the position limits from -0.5 to 0.5
+            positions[i] = (Math.random() - 0.5) * size;
         }
 
         const positionsAttribute = new THREE.BufferAttribute(positions, 3);
