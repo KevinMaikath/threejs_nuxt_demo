@@ -28,6 +28,7 @@ export default class DebugLesson extends LessonSetupMixin {
         this.addCube();
         this.setUpOrbitControls();
 
+        this.addGui();
         this.setUpGui();
         this.setUpColorChangeGui();
         this.setUpFunctionGui();
@@ -37,11 +38,6 @@ export default class DebugLesson extends LessonSetupMixin {
     }
 
     setUpGui() {
-        // The library dat.gui has to be imported locally to avoid the error
-        // "window is not defined" on every page reload
-        const { GUI } = require("dat.gui");
-        this.gui = new GUI();
-
         /**
          * TIPS:
          *  We can hide the gui -> this.gui.hide()

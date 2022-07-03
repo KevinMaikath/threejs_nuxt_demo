@@ -61,6 +61,7 @@ export default class ShadowsLesson extends LessonSetupMixin {
         // this.useBakedShadow();
         // this.useMovingBakedShadow();
 
+        this.addGui();
         this.setUpGui();
 
         this.setUpOrbitControls();
@@ -302,9 +303,6 @@ export default class ShadowsLesson extends LessonSetupMixin {
     }
 
     setUpGui() {
-        const { GUI } = require("dat.gui");
-        this.gui = new GUI({ name: "main-gui" });
-
         // Ambient Light
         const ambientLightFolder = this.gui.addFolder("Ambient light");
         ambientLightFolder.closed = false;

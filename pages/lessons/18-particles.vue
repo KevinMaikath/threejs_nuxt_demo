@@ -28,6 +28,7 @@ export default class ParticlesLesson extends LessonSetupMixin {
 
         this.addParticles();
 
+        this.addGui();
         this.setUpGui();
 
         this.setUpOrbitControls();
@@ -101,10 +102,10 @@ export default class ParticlesLesson extends LessonSetupMixin {
         // Each particle position needs 3 values (x,y,z)
         const arrayLength = this.particlesCount * 3;
         const positions = new Float32Array(arrayLength);
+        const size = 10;
 
         // Each color for each particle needs 3 values (R,G,B)
         const colors = new Float32Array(arrayLength);
-        const size = 10;
 
         for (let i = 0; i < arrayLength; i += 1) {
             positions[i] = (Math.random() - 0.5) * size;
@@ -122,9 +123,6 @@ export default class ParticlesLesson extends LessonSetupMixin {
     }
 
     setUpGui() {
-        const { GUI } = require("dat.gui");
-        this.gui = new GUI({ name: "main-gui" });
-
         // Particles
         const materialFolder = this.gui.addFolder("Material");
         materialFolder.closed = false;

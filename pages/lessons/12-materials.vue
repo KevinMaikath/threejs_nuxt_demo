@@ -61,6 +61,7 @@ export default class MaterialsLesson extends LessonSetupMixin {
 
         this.addEnvironmentMap();
 
+        this.addGui();
         this.setUpGui();
 
         this.addPlane();
@@ -224,9 +225,6 @@ export default class MaterialsLesson extends LessonSetupMixin {
     }
 
     setUpGui() {
-        const { GUI } = require("dat.gui");
-        this.gui = new GUI();
-
         // This will only work if the material is a MeshStandardMaterial.
         this.gui.add(this.material, "metalness").min(0).max(1).step(0.0001);
         this.gui.add(this.material, "roughness").min(0).max(1).step(0.0001);

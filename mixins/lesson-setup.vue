@@ -4,6 +4,7 @@ import Component from "vue-class-component";
 import * as THREE from "three";
 import { Mesh, PerspectiveCamera, Scene, WebGLRenderer } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { GUI } from "dat.gui";
 
 export type FrameRequestCallback = (time: number) => void;
 
@@ -22,6 +23,8 @@ export default class LessonSetupMixin extends Vue {
 
     cube!: Mesh;
     controls?: OrbitControls;
+
+    gui?: GUI;
 
     resizeListener?: () => void;
 
@@ -110,6 +113,8 @@ export default class LessonSetupMixin extends Vue {
         if (this.resizeListener) {
             window.removeEventListener("resize", this.resizeListener);
         }
+
+        if (this.gui) this.gui.destroy();
     }
 
     /**
@@ -156,6 +161,23 @@ export default class LessonSetupMixin extends Vue {
         const material = new THREE.MeshBasicMaterial();
         this.cube = new THREE.Mesh(geometry, material);
         this.scene.add(this.cube);
+    }
+
+    /**
+     * Create a dat.GUI instance and save it in this.gui
+     * It will also remove the previous GUIs from the DOM if there's anyone (if we don't do that, we will add a new GUI
+     * everytime that the hot-reload is triggered).
+     */
+    addGui() {
+        const previousGui = document.querySelectorAll(".dg.main.a");
+        for (const gui of previousGui) {
+            gui.remove();
+        }
+
+        // The library dat.gui has to be imported locally to avoid the error
+        // "window is not defined" on every page reload
+        const { GUI } = require("dat.gui");
+        this.gui = new GUI({ name: "main-gui" });
     }
 }
 </script>
