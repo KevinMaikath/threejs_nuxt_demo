@@ -16,13 +16,9 @@ import {
     Vector3,
 } from "three";
 import LessonSetupMixin from "~/mixins/lesson-setup.vue";
+import { removeAllListeners, WindowListenersMap } from "~/types/dom";
 
 type BasicSphereMesh = Mesh<SphereGeometry, MeshBasicMaterial>;
-
-// eslint-disable-next-line no-undef
-type WindowEvent = keyof WindowEventMap;
-// eslint-disable-next-line no-undef
-type WindowEventListener = EventListener;
 
 @Component
 export default class RayCasterLesson extends LessonSetupMixin {
@@ -35,9 +31,7 @@ export default class RayCasterLesson extends LessonSetupMixin {
     // Current position of the mouse
     mouse: Vector2 = new Vector2();
 
-    mouseListeners: {
-        [key in WindowEvent]?: WindowEventListener;
-    } = {};
+    mouseListeners: WindowListenersMap = {};
 
     currentIntersection;
 
@@ -62,10 +56,7 @@ export default class RayCasterLesson extends LessonSetupMixin {
 
     destroy() {
         super.destroy();
-
-        Object.entries(this.mouseListeners).forEach(([eventName, callback]) => {
-            window.removeEventListener(eventName, callback);
-        });
+        removeAllListeners(this.mouseListeners);
     }
 
     addSpheres() {

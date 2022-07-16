@@ -14,7 +14,7 @@ import {
     SphereGeometry,
     Object3D,
 } from "three";
-import { AxisGridHelper } from "~/models/dat-gui";
+import { AxisGridHelper } from "~/types/dat-gui";
 
 type FrameRequestCallback = (time: number) => void;
 
