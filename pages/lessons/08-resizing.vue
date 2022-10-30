@@ -105,8 +105,6 @@ export default class ResizingLesson extends LessonSetupMixin {
 
     setUpAnimation() {
         this.animation = (_: number) => {
-            // const elapsedTime = this.clock.getElapsedTime();
-            this.controls.update();
             this.camera.lookAt(this.cube.position);
         };
     }

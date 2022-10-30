@@ -156,7 +156,6 @@ export default class ThreeDTextLesson extends LessonSetupMixin {
 
     setUpAnimation() {
         this.animation = (_: number) => {
-            this.controls.update();
             this.camera.lookAt(this.text.position);
         };
     }

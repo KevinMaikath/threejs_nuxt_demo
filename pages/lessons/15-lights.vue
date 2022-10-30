@@ -212,7 +212,6 @@ export default class LightsLesson extends LessonSetupMixin {
 
         this.animation = (_: number) => {
             const elapsedTime = clock.getElapsedTime();
-            this.controls.update();
 
             if (this.spotLightHelper) this.spotLightHelper.update();
 

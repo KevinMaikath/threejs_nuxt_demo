@@ -34,7 +34,7 @@ import LessonSetupMixin from "~/mixins/lesson-setup.vue";
 import { removeAllListeners, WindowListenersMap } from "~/types/dom";
 
 @Component({ layout: "default" })
-export default class RayCasterLesson extends LessonSetupMixin {
+export default class ScrollLesson extends LessonSetupMixin {
     canvas!: HTMLCanvasElement;
     controls!: OrbitControls;
 
@@ -273,8 +273,11 @@ export default class RayCasterLesson extends LessonSetupMixin {
             const elapsedTime = clock.getElapsedTime();
 
             /**
-             * The time delta will stores the time between each frame.
+             * The time delta stores the time between each frame.
              * This will help us make animations that behave the same way in screens with different refresh rate.
+             *
+             * The Clock class has a method "getDelta", but that won't give us the expected result and could mess up
+             * the behaviour.
              */
             const deltaTime = elapsedTime - previousTime;
             previousTime = elapsedTime;

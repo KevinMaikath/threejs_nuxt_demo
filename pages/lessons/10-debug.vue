@@ -83,7 +83,6 @@ export default class DebugLesson extends LessonSetupMixin {
 
     setUpAnimation() {
         this.animation = (_: number) => {
-            this.controls.update();
             this.camera.lookAt(this.cube.position);
         };
     }

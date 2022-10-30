@@ -139,6 +139,7 @@ export default class LessonSetupMixin extends Vue {
 
         this._animation = (time: number) => {
             func(time);
+            if (this.controls) this.controls.update();
             this.play();
             requestAnimationFrame(this._animation!.bind(this));
         };

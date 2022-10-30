@@ -11,6 +11,7 @@
         "lint": "npm run lint:js"
     },
     "dependencies": {
+        "cannon": "^0.6.2",
         "core-js": "^3.15.1",
         "dat.gui": "^0.7.7",
         "gsap": "^3.9.1",
@@ -27,6 +28,7 @@
         "@nuxt/typescript-build": "^2.1.0",
         "@nuxtjs/eslint-config-typescript": "^6.0.1",
         "@nuxtjs/eslint-module": "^3.0.2",
+        "@types/cannon": "^0.1.8",
         "@types/dat.gui": "^0.7.7",
         "@types/three": "^0.133.1",
         "eslint": "^7.29.0",

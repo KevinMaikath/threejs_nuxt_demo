@@ -361,7 +361,6 @@ export default class ShadowsLesson extends LessonSetupMixin {
 
         this.animation = (_: number) => {
             const elapsedTime = clock.getElapsedTime();
-            this.controls.update();
 
             // Move the sphere
             this.sphere.position.set(

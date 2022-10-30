@@ -118,7 +118,6 @@ export default class GeometriesLesson extends LessonSetupMixin {
 
     setUpAnimation() {
         this.animation = (_: number) => {
-            this.controls.update();
             this.camera.lookAt(this.cube.position);
         };
     }

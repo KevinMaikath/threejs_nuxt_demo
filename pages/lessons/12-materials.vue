@@ -388,7 +388,6 @@ export default class MaterialsLesson extends LessonSetupMixin {
 
         this.animation = (_: number) => {
             const elapsedTime = this.clock.getElapsedTime();
-            this.controls.update();
 
             this.objects.forEach((obj) => {
                 obj.rotation.y = 0.15 * elapsedTime;
