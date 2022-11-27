@@ -21,7 +21,7 @@ import {
     SphereGeometry,
     Vector3,
 } from "three";
-import CANNON, { Body, World } from "cannon";
+import CANNON, { Body, ICollisionEvent, World } from "cannon";
 import LessonSetupMixin from "~/mixins/lesson-setup.vue";
 import {
     cannonQuaternionToThreeQuaternion,
@@ -77,6 +77,46 @@ export default class PhysicsLesson extends LessonSetupMixin {
 
     boxes: BoxInstance[] = [];
 
+    hitAudio;
+
+    /**
+     * Further study on Cannon.js:
+     *
+     * ## CONSTRAINTS
+     *
+     * Constraints, as the name suggests, enable constraints between two bodies. Here's the list of constraints:
+     *
+     * HingeConstraint: acts like a door hinge (bind 2 objects with a line).
+     * DistanceConstraint: forces the bodies to keep a distance between each other.
+     * LockConstraint: merges the bodies like if they were one piece.
+     * PointToPointConstraint: glues the bodies to a specific point.
+     *
+     * ## WORKERS
+     *
+     * By default, the physics world is running and being calculated in the same CPU thread as the 3D scene. To prevent
+     * the main thread to overload we can make the physics world run with a worker so that it runs in a different thread
+     * if possible.
+     *
+     * Here is an example of that: https://schteppe.github.io/cannon.js/examples/worker.html
+     * (inspect -> sources -> examples/worker.js)
+     *
+     * ## CANNON-ES
+     *
+     * Cannon.js hasn't been updated for years, but some guys forked the project and started doing updates there.
+     * It's called "cannon-es" (https://www.npmjs.com/package/cannon-es)
+     *
+     * ## AMMO
+     *
+     * Ammo.js is a more popular physics library than Cannon.js (however, Mr. teacher thinks that it's harder to
+     * implement).
+     *
+     * ## Physijs
+     *
+     * Physijs is a library that makes it easier to implement physics in a Three.js project. For example, you can create
+     * a Box and it will be added simultaneously to the scene and to the physics world.
+     *
+     * It uses Ammo and it supports workers natively.
+     */
     mounted() {
         this.canvas = this.$refs.canvas as HTMLCanvasElement;
         this.setUp();
@@ -96,6 +136,7 @@ export default class PhysicsLesson extends LessonSetupMixin {
         this.setPhysicsWorldSleep();
 
         // this.applyInitialForceToSingleSphere();
+        this.hitAudio = new Audio("/sounds/hit.mp3");
 
         this.addGui();
         this.setUpGui();
@@ -336,9 +377,7 @@ export default class PhysicsLesson extends LessonSetupMixin {
         // Three.js mesh
         const sphereMesh = new Mesh(this.sphereGeometry, this.sphereMaterial);
 
-        /**
-         * Instead of updating the radius of the sphere Geometry, we can just update the scale of the sphere Mesh
-         */
+        /** Instead of updating the radius of the sphere Geometry, we can just update the scale of the sphere Mesh */
         sphereMesh.scale.set(radius, radius, radius);
         sphereMesh.castShadow = true;
         sphereMesh.position.copy(position);
@@ -351,11 +390,15 @@ export default class PhysicsLesson extends LessonSetupMixin {
             position: new CANNON.Vec3().copy(vector3ToVec3(position)),
             shape: sphereShape,
         });
+        sphereBody.addEventListener("collide", this.collisionEventHandler);
         this.physicsWorld.addBody(sphereBody);
 
         this.spheres.push({ mesh: sphereMesh, body: sphereBody });
     }
 
+    /**
+     * Add a box both to the 3D world and the physics world with the given parameters.
+     */
     createBox(width: number, height: number, depth: number, position: Vector3) {
         // Three.js mesh
         const boxMesh = new Mesh(this.boxGeometry, this.boxMaterial);
@@ -376,6 +419,7 @@ export default class PhysicsLesson extends LessonSetupMixin {
             shape: boxShape,
         });
         boxBody.position.copy(vector3ToVec3(position));
+        boxBody.addEventListener("collide", this.collisionEventHandler);
         this.physicsWorld.addBody(boxBody);
 
         this.boxes.push({ mesh: boxMesh, body: boxBody });
@@ -397,10 +441,56 @@ export default class PhysicsLesson extends LessonSetupMixin {
                     new Vector3(Math.random() * 0.5, 3, Math.random() * 0.5)
                 );
             },
+            reset: this.reset,
         };
 
         this.gui.add(this.guiActions, "addSphere");
         this.gui.add(this.guiActions, "addBox");
+        this.gui.add(this.guiActions, "reset");
+    }
+
+    /**
+     * Handle the collision of any object in the scene.
+     * @param collisionEvent
+     */
+    collisionEventHandler(collisionEvent: ICollisionEvent) {
+        const strength = collisionEvent.contact.getImpactVelocityAlongNormal();
+
+        // Only play the hit sound when the collision is strong enough to avoid hearing it repeatedly when an object
+        // is bouncing too much when it's really close to the floor.
+        if (strength >= 1.5) {
+            this.playSound();
+        }
+    }
+
+    playSound() {
+        /**
+         * If we don't reset the audio sound to 0, when we try to play it while
+         * it's already playing nothing will happen.
+         */
+        this.hitAudio.currentTime = 0;
+
+        /** Adding randomness to the volume will prevent it from sounding fake (too linear) */
+        this.hitAudio.volume = Math.random();
+
+        this.hitAudio.play();
+    }
+
+    /**
+     * Remove all the objects from the scene and physics world.
+     */
+    reset() {
+        for (const element of [...this.spheres, ...this.boxes]) {
+            // Remove from scene
+            this.scene.remove(element.mesh);
+
+            // Remove from physics world
+            element.body.removeEventListener(
+                "collide",
+                this.collisionEventHandler
+            );
+            this.physicsWorld.remove(element.body);
+        }
     }
 
     setUpAnimation() {
