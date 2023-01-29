@@ -7,7 +7,10 @@ import Component from "vue-class-component";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { GUI } from "dat.gui";
 import {
+    AmbientLight,
     Clock,
+    DirectionalLight,
+    Group,
     Mesh,
     MeshBasicMaterial,
     Raycaster,
@@ -15,6 +18,7 @@ import {
     Vector2,
     Vector3,
 } from "three";
+import * as THREE from "three";
 import LessonSetupMixin from "~/mixins/lesson-setup.vue";
 import { removeAllListeners, WindowListenersMap } from "~/types/dom";
 
@@ -35,11 +39,21 @@ export default class RayCasterLesson extends LessonSetupMixin {
 
     currentIntersection;
 
+    // Imported model section
+    isImportedModelSectionEnabled = false;
+    gltfLoader!: any;
+    duckScene!: Group;
+    ambientLight!: AmbientLight;
+    directionalLight!: DirectionalLight;
+    modelIntersection;
+
     gui!: GUI;
 
     mounted() {
         this.canvas = this.$refs.canvas as HTMLCanvasElement;
         this.setUp();
+
+        this.setUpImportedModelSection();
 
         this.addSpheres();
         this.addRayCaster();
@@ -63,13 +77,17 @@ export default class RayCasterLesson extends LessonSetupMixin {
         const sphere1 = this.createSphere();
         sphere1.position.set(-2, 5, 0);
 
-        const sphere2 = this.createSphere();
-        sphere2.position.set(0, 0, 0);
-
         const sphere3 = this.createSphere();
         sphere3.position.set(2, 6, 0);
 
-        this.spheres = [sphere1, sphere2, sphere3];
+        this.spheres = [sphere1, sphere3];
+
+        if (!this.isImportedModelSectionEnabled) {
+            const sphere2 = this.createSphere();
+            sphere2.position.set(0, 0, 0);
+            this.spheres.splice(1, 0, sphere2);
+        }
+
         this.scene.add(...this.spheres);
     }
 
@@ -152,6 +170,45 @@ export default class RayCasterLesson extends LessonSetupMixin {
         window.addEventListener("click", this.mouseListeners.click);
     }
 
+    /***************************************************************************
+     * New section with imported models
+     **************************************************************************/
+
+    setUpImportedModelSection() {
+        this.isImportedModelSectionEnabled = true;
+        this.addGLTFLoader();
+        this.addDuckModel();
+        this.addLights();
+    }
+
+    addGLTFLoader() {
+        // Importing this at the beginning of the file was causing errors
+        const { GLTFLoader } = require("three/examples/jsm/loaders/GLTFLoader");
+
+        this.gltfLoader = new GLTFLoader();
+    }
+
+    addDuckModel() {
+        this.gltfLoader.load("/models/Duck/glTF-Binary/Duck.glb", (gltf) => {
+            this.duckScene = gltf.scene.clone();
+
+            // Add the whole scene
+            this.duckScene.position.y = -0.8;
+            this.scene.add(this.duckScene);
+        });
+    }
+
+    addLights() {
+        // Ambient Light
+        this.ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        this.scene.add(this.ambientLight);
+
+        // Directional Light
+        this.directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+        this.directionalLight.position.set(1, 2, 3);
+        this.scene.add(this.directionalLight);
+    }
+
     setUpAnimation() {
         const clock = new Clock();
 
@@ -194,6 +251,33 @@ export default class RayCasterLesson extends LessonSetupMixin {
                 }
 
                 this.currentIntersection = null;
+            }
+
+            // Imported model section
+            if (!this.isImportedModelSectionEnabled || !this.duckScene) return;
+
+            /**
+             * Notes:
+             *
+             * `duckScene` is a Group, not a Mesh, but the RayCaster still works
+             * on it because it checks for all the children recursively by
+             * default. We can enable/disable that with the second parameter of
+             * `intersectObject()`.
+             *
+             * This method returns an array of Intersections for 2 reasons:
+             * - It could detect an intersection with multiple Meshes (multiple
+             *      children of the Group in this case).
+             * - It could detect multiple intersections with the same Mesh
+             *      (which can be the case with complex geometries).
+             */
+            this.modelIntersection = this.rayCaster.intersectObject(
+                this.duckScene
+            );
+
+            if (this.modelIntersection.length > 0) {
+                this.duckScene.scale.set(1.2, 1.2, 1.2);
+            } else {
+                this.duckScene.scale.set(1, 1, 1);
             }
         };
     }
