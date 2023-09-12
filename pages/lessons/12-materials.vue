@@ -226,14 +226,29 @@ export default class MaterialsLesson extends LessonSetupMixin {
 
     setUpGui() {
         // This will only work if the material is a MeshStandardMaterial.
-        this.gui.add(this.material, "metalness").min(0).max(1).step(0.0001);
-        this.gui.add(this.material, "roughness").min(0).max(1).step(0.0001);
-        this.gui.add(this.material, "aoMapIntensity").min(0).max(10).step(0.01);
-        this.gui
-            .add(this.material, "displacementScale")
-            .min(0)
-            .max(1)
-            .step(0.0001);
+        if ("metalness" in this.material) {
+            this.gui.add(this.material, "metalness").min(0).max(1).step(0.0001);
+        }
+
+        if ("roughness" in this.material) {
+            this.gui.add(this.material, "roughness").min(0).max(1).step(0.0001);
+        }
+
+        if ("aoMapIntensity" in this.material) {
+            this.gui
+                .add(this.material, "aoMapIntensity")
+                .min(0)
+                .max(10)
+                .step(0.01);
+        }
+
+        if ("displacementScale" in this.material) {
+            this.gui
+                .add(this.material, "displacementScale")
+                .min(0)
+                .max(1)
+                .step(0.0001);
+        }
     }
 
     addPlane() {

@@ -5,7 +5,13 @@
 <script lang="ts">
 import Component from "vue-class-component";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { PerspectiveCamera } from "three";
+import {
+    BoxGeometry,
+    BufferGeometry,
+    Mesh,
+    MeshBasicMaterial,
+    PerspectiveCamera,
+} from "three";
 import * as THREE from "three";
 import LessonSetupMixin from "~/mixins/lesson-setup.vue";
 
@@ -87,7 +93,7 @@ export default class GeometriesLesson extends LessonSetupMixin {
             color: 0x00ff00,
             wireframe: true,
         });
-        this.cube = new THREE.Mesh(geometry, material);
+        this.cube = new Mesh<any, MeshBasicMaterial>(geometry, material);
         this.scene.add(this.cube);
     }
 
@@ -112,7 +118,7 @@ export default class GeometriesLesson extends LessonSetupMixin {
             color: 0x00ff00,
             wireframe: true,
         });
-        this.cube = new THREE.Mesh(geometry, material);
+        this.cube = new THREE.Mesh<any, MeshBasicMaterial>(geometry, material);
         this.scene.add(this.cube);
     }
 

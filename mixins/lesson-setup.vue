@@ -2,7 +2,14 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import * as THREE from "three";
-import { Mesh, PerspectiveCamera, Scene, WebGLRenderer } from "three";
+import {
+    BoxGeometry,
+    Mesh,
+    MeshBasicMaterial,
+    PerspectiveCamera,
+    Scene,
+    WebGLRenderer,
+} from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { GUI } from "dat.gui";
 
@@ -21,7 +28,7 @@ export default class LessonSetupMixin extends Vue {
     scene!: Scene;
     camera!: PerspectiveCamera;
 
-    cube!: Mesh;
+    cube!: Mesh<BoxGeometry, MeshBasicMaterial>;
     controls?: OrbitControls;
 
     gui?: GUI;
@@ -158,9 +165,9 @@ export default class LessonSetupMixin extends Vue {
     }
 
     addCube() {
-        const geometry = new THREE.BoxGeometry();
-        const material = new THREE.MeshBasicMaterial();
-        this.cube = new THREE.Mesh(geometry, material);
+        const geometry = new BoxGeometry();
+        const material = new MeshBasicMaterial();
+        this.cube = new Mesh(geometry, material);
         this.scene.add(this.cube);
     }
 

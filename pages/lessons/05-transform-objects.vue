@@ -5,12 +5,12 @@
 <script lang="ts">
 import Component from "vue-class-component";
 import * as THREE from "three";
-import { AxesHelper, Group, Mesh } from "three";
+import { AxesHelper, BoxGeometry, Group, Mesh, MeshBasicMaterial } from "three";
 import LessonSetupMixin from "~/mixins/lesson-setup.vue";
 
 @Component
 export default class TransformObjectsLesson extends LessonSetupMixin {
-    cube!: Mesh;
+    cube!: Mesh<BoxGeometry, MeshBasicMaterial>;
     axesHelper!: AxesHelper;
 
     group!: Group;
