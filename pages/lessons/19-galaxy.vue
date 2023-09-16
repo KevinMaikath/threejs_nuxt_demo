@@ -33,7 +33,7 @@ export default class GalaxyLesson extends LessonSetupMixin {
 
     gui!: GUI;
 
-    mounted() {
+    async mounted() {
         this.canvas = this.$refs.canvas as HTMLCanvasElement;
         this.setUp();
 
@@ -41,7 +41,7 @@ export default class GalaxyLesson extends LessonSetupMixin {
 
         this.generateGalaxy();
 
-        this.addGui();
+        await this.addGui();
         this.setUpGui();
 
         this.setUpOrbitControls();

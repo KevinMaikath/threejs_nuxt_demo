@@ -8,6 +8,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { GUI } from "dat.gui";
 import * as THREE from "three";
 import { AmbientLight, DirectionalLight, Mesh } from "three";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import LessonSetupMixin from "~/mixins/lesson-setup.vue";
 
 @Component
@@ -54,19 +55,19 @@ export default class CustomBlenderModels extends LessonSetupMixin {
         this.scene.add(this.plane);
 
         // Ambient Light
-        this.ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        this.ambientLight = new THREE.AmbientLight(0xffffff, Math.PI * 0.5);
         this.scene.add(this.ambientLight);
 
         // Directional Light
-        this.directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+        this.directionalLight = new THREE.DirectionalLight(
+            0xffffff,
+            Math.PI * 0.5
+        );
         this.directionalLight.position.set(2, 2, -1);
         this.scene.add(this.directionalLight);
     }
 
     addGLTFLoader() {
-        // Importing this at the beginning of the file was causing errors
-        const { GLTFLoader } = require("three/examples/jsm/loaders/GLTFLoader");
-
         this.gltfLoader = new GLTFLoader();
     }
 

@@ -19,6 +19,7 @@ import {
     Vector3,
 } from "three";
 import * as THREE from "three";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import LessonSetupMixin from "~/mixins/lesson-setup.vue";
 import { removeAllListeners, WindowListenersMap } from "~/types/dom";
 
@@ -68,8 +69,7 @@ export default class RayCasterLesson extends LessonSetupMixin {
         this.startAnimation();
     }
 
-    destroy() {
-        super.destroy();
+    beforeDestroy() {
         removeAllListeners(this.mouseListeners);
     }
 
@@ -182,9 +182,6 @@ export default class RayCasterLesson extends LessonSetupMixin {
     }
 
     addGLTFLoader() {
-        // Importing this at the beginning of the file was causing errors
-        const { GLTFLoader } = require("three/examples/jsm/loaders/GLTFLoader");
-
         this.gltfLoader = new GLTFLoader();
     }
 
@@ -200,11 +197,14 @@ export default class RayCasterLesson extends LessonSetupMixin {
 
     addLights() {
         // Ambient Light
-        this.ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        this.ambientLight = new THREE.AmbientLight(0xffffff, Math.PI * 0.5);
         this.scene.add(this.ambientLight);
 
         // Directional Light
-        this.directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+        this.directionalLight = new THREE.DirectionalLight(
+            0xffffff,
+            Math.PI * 0.5
+        );
         this.directionalLight.position.set(1, 2, 3);
         this.scene.add(this.directionalLight);
     }

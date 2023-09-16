@@ -22,13 +22,13 @@ export default class ParticlesLesson extends LessonSetupMixin {
 
     gui!: GUI;
 
-    mounted() {
+    async mounted() {
         this.canvas = this.$refs.canvas as HTMLCanvasElement;
         this.setUp();
 
         this.addParticles();
 
-        this.addGui();
+        await this.addGui();
         this.setUpGui();
 
         this.setUpOrbitControls();

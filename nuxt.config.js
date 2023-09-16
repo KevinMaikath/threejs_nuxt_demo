@@ -31,5 +31,7 @@ export default {
 
     modules: [],
 
-    build: {},
+    build: {
+        transpile: ["three"],
+    },
 };

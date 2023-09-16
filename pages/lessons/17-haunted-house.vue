@@ -163,7 +163,7 @@ export default class HauntedHouseLesson extends LessonSetupMixin {
         this.scene.add(this.directionalLight);
 
         // Door light
-        this.doorLight = new THREE.PointLight("#ff7d46", 1, 7);
+        this.doorLight = new THREE.PointLight("#ff7d46", 3, 7);
         this.doorLight.position.set(0, 2.2, 2.7);
         this.scene.add(this.doorLight);
     }
@@ -316,9 +316,9 @@ export default class HauntedHouseLesson extends LessonSetupMixin {
     }
 
     addGhosts() {
-        const ghost1 = new THREE.PointLight("#ff00ff", 2, 3);
-        const ghost2 = new THREE.PointLight("#00ffff", 2, 3);
-        const ghost3 = new THREE.PointLight("#ffff00", 2, 3);
+        const ghost1 = new THREE.PointLight("#ff00ff", 4, 3);
+        const ghost2 = new THREE.PointLight("#00ffff", 4, 3);
+        const ghost3 = new THREE.PointLight("#ffff00", 4, 3);
 
         this.ghosts = [ghost1, ghost2, ghost3];
         this.scene.add(...this.ghosts);

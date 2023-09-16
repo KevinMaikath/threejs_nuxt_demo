@@ -54,12 +54,12 @@ export default class LightsLesson extends LessonSetupMixin {
          * You can test this by adding a DirectionalLight/PointLight to the Scene and toggle an AmbientLight to see the
          * results.
          */
-        // const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        // const ambientLight = new THREE.AmbientLight(0xffffff, Math.PI * 0.5);
         // this.scene.add(ambientLight);
 
         // You can change the attributes after initialization
         // ambientLight.color = new THREE.Color(0xff0ff);
-        // ambientLight.intensity = 0.3;
+        // ambientLight.intensity = PI * 0.3;
 
         /**
          * HemisphereLight is similar to AmbientLight but with 2 colors, one coming from the sky and another one coming
@@ -68,7 +68,7 @@ export default class LightsLesson extends LessonSetupMixin {
         // const hemisphereLight = new THREE.HemisphereLight(
         //     0xff0000,
         //     0x0000ff,
-        //     0.5
+        //     Math.PI * 0.5
         // );
         // this.scene.add(hemisphereLight);
 
@@ -87,7 +87,7 @@ export default class LightsLesson extends LessonSetupMixin {
          * where the light comes from, we have to modify the position of the Light. A DirectionalLight will always point
          * to the center of the scene from it's current position.
          */
-        // const directionalLight = new THREE.DirectionalLight(0x00fffc, 0.3);
+        // const directionalLight = new THREE.DirectionalLight(0x00fffc, Math.PI * 0.3);
         // directionalLight.position.set(1, 0.5, 0);
         // this.scene.add(directionalLight);
 
@@ -124,14 +124,11 @@ export default class LightsLesson extends LessonSetupMixin {
         rectAreaLight.position.z = 2;
         this.scene.add(rectAreaLight);
 
-        // We can change it's position and the point it faces to
+        // We can change its position and the point it faces to
         // rectAreaLight.position.set(-1.5, 0, 1.5);
         // rectAreaLight.lookAt(new THREE.Vector3());
 
         // The Helper must be imported directly from the Three.js examples
-        // const {
-        //     RectAreaLightHelper,
-        // } = require("three/examples/jsm/helpers/RectAreaLightHelper");
         // const rectAreaLightHelper = new RectAreaLightHelper(rectAreaLight);
         // this.scene.add(rectAreaLightHelper);
 

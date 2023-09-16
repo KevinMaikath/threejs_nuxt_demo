@@ -14,6 +14,7 @@ import {
     SphereGeometry,
     Object3D,
 } from "three";
+import { GUI } from "dat.gui";
 import { AxisGridHelper } from "~/types/dat-gui";
 
 type FrameRequestCallback = (time: number) => void;
@@ -80,7 +81,7 @@ export default class SolarSystem extends Vue {
 
     setUpLight() {
         const color = 0xffffff;
-        const intensity = 3;
+        const intensity = Math.PI * 3;
         const light = new THREE.PointLight(color, intensity);
 
         this.scene.add(light);
@@ -170,9 +171,6 @@ export default class SolarSystem extends Vue {
     }
 
     setUpGui() {
-        // The library dat.gui has to be imported locally to avoid the error
-        // "window is not defined" on every page reload
-        const { GUI } = require("dat.gui");
         this.gui = new GUI();
     }
 

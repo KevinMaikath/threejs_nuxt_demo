@@ -20,7 +20,7 @@ export default class DebugLesson extends LessonSetupMixin {
         spin: this.spin,
     };
 
-    mounted() {
+    async mounted() {
         this.canvas = this.$refs.canvas as HTMLCanvasElement;
         this.setUpSizes();
         this.setUp();
@@ -28,7 +28,7 @@ export default class DebugLesson extends LessonSetupMixin {
         this.addCube();
         this.setUpOrbitControls();
 
-        this.addGui();
+        await this.addGui();
         this.setUpGui();
         this.setUpColorChangeGui();
         this.setUpFunctionGui();

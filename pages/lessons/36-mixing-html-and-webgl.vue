@@ -37,9 +37,11 @@ import {
     PlaneGeometry,
     Raycaster,
     ShaderMaterial,
+    Vector2,
     Vector3,
 } from "three";
 import { gsap } from "gsap";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import LessonSetupMixin from "~/mixins/lesson-setup.vue";
 
 type InfoPoint = {
@@ -102,8 +104,7 @@ export default class MixingHtmlAndWebGlLesson extends LessonSetupMixin {
     // <From Lesson 25>
 
     configureRenderer() {
-        this.renderer.physicallyCorrectLights = true;
-        this.renderer.outputEncoding = THREE.sRGBEncoding;
+        this.renderer.outputColorSpace = "srgb";
         this.renderer.toneMapping = THREE.ReinhardToneMapping;
         this.renderer.toneMappingExposure = 3;
         this.renderer.shadowMap.enabled = true;
@@ -111,7 +112,7 @@ export default class MixingHtmlAndWebGlLesson extends LessonSetupMixin {
     }
 
     addLights() {
-        this.directionalLight = new DirectionalLight("#ffffff", 3);
+        this.directionalLight = new DirectionalLight("#ffffff", Math.PI * 3);
         this.directionalLight.castShadow = true;
         this.directionalLight.shadow.camera.far = 15;
         this.directionalLight.shadow.mapSize.set(1024, 1024);
@@ -129,7 +130,7 @@ export default class MixingHtmlAndWebGlLesson extends LessonSetupMixin {
             "/textures/environmentMaps/0/pz.jpg",
             "/textures/environmentMaps/0/nz.jpg",
         ]);
-        this.environmentMap.encoding = THREE.sRGBEncoding;
+        this.environmentMap.colorSpace = "srgb";
 
         this.scene.background = this.environmentMap;
         this.scene.environment = this.environmentMap;
@@ -196,7 +197,6 @@ export default class MixingHtmlAndWebGlLesson extends LessonSetupMixin {
             }
         );
 
-        const { GLTFLoader } = require("three/examples/jsm/loaders/GLTFLoader");
         this.gltfLoader = new GLTFLoader(this.loadingManager);
         this.cubeTextureLoader = new CubeTextureLoader(this.loadingManager);
     }
@@ -277,8 +277,13 @@ export default class MixingHtmlAndWebGlLesson extends LessonSetupMixin {
 
                 /** Test if the point should be visible right now */
 
+                const pointCoords = new Vector2(
+                    screenPosition.x,
+                    screenPosition.y
+                );
+
                 // Here we can use the screenPosition (NDC) instead of the coordinates of the mouse.
-                this.raycaster.setFromCamera(screenPosition, this.camera);
+                this.raycaster.setFromCamera(pointCoords, this.camera);
                 const intersects = this.raycaster.intersectObjects(
                     this.scene.children,
                     true

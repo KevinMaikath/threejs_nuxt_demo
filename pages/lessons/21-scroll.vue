@@ -61,7 +61,7 @@ export default class ScrollLesson extends LessonSetupMixin {
     // Current position of the mouse in the Window
     mouse: Vector2 = new Vector2();
 
-    mounted() {
+    async mounted() {
         this.canvas = this.$refs.canvas as HTMLCanvasElement;
         this.setUp();
         this.addCameraToCameraGroup();
@@ -76,15 +76,14 @@ export default class ScrollLesson extends LessonSetupMixin {
         this.setUpScroll();
         this.setUpMousemove();
 
-        this.addGui();
+        await this.addGui();
         this.setUpGui();
 
         this.setUpAnimation();
         this.startAnimation();
     }
 
-    destroy() {
-        super.destroy();
+    beforeDestroy() {
         removeAllListeners(this.listeners);
     }
 
@@ -156,7 +155,7 @@ export default class ScrollLesson extends LessonSetupMixin {
     }
 
     addLight() {
-        const directionalLight = new THREE.DirectionalLight("#ffffff", 1);
+        const directionalLight = new THREE.DirectionalLight("#ffffff", Math.PI);
         directionalLight.position.set(1, 1, 0);
         this.scene.add(directionalLight);
     }

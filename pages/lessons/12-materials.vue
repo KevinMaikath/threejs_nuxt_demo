@@ -49,7 +49,7 @@ export default class MaterialsLesson extends LessonSetupMixin {
     clock!: Clock;
     objects!: Mesh[];
 
-    mounted() {
+    async mounted() {
         this.canvas = this.$refs.canvas as HTMLCanvasElement;
         this.setUpSizes();
         this.setUp();
@@ -61,7 +61,7 @@ export default class MaterialsLesson extends LessonSetupMixin {
 
         this.addEnvironmentMap();
 
-        this.addGui();
+        await this.addGui();
         this.setUpGui();
 
         this.addPlane();
@@ -216,7 +216,7 @@ export default class MaterialsLesson extends LessonSetupMixin {
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
         this.scene.add(ambientLight);
 
-        const pointLight = new THREE.PointLight(0xffffff, 0.5);
+        const pointLight = new THREE.PointLight(0xffffff, 5);
         pointLight.position.x = 2;
         pointLight.position.y = 3;
         pointLight.position.z = 4;

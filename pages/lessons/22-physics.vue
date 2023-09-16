@@ -117,7 +117,7 @@ export default class PhysicsLesson extends LessonSetupMixin {
      *
      * It uses Ammo and it supports workers natively.
      */
-    mounted() {
+    async mounted() {
         this.canvas = this.$refs.canvas as HTMLCanvasElement;
         this.setUp();
         this.camera.position.y = 5;
@@ -138,7 +138,7 @@ export default class PhysicsLesson extends LessonSetupMixin {
         // this.applyInitialForceToSingleSphere();
         this.hitAudio = new Audio("/sounds/hit.mp3");
 
-        this.addGui();
+        await this.addGui();
         this.setUpGui();
 
         this.setUpOrbitControls();
@@ -200,10 +200,10 @@ export default class PhysicsLesson extends LessonSetupMixin {
     }
 
     addLights() {
-        this.ambientLight = new AmbientLight(0xffffff, 0.7);
+        this.ambientLight = new AmbientLight(0xffffff, Math.PI * 0.7);
         this.scene.add(this.ambientLight);
 
-        this.directionalLight = new DirectionalLight(0xffffff, 0.2);
+        this.directionalLight = new DirectionalLight(0xffffff, Math.PI * 0.2);
         this.directionalLight.castShadow = true;
         this.directionalLight.shadow.mapSize.set(1024, 1024);
         this.directionalLight.shadow.camera.far = 15;

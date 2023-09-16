@@ -42,7 +42,7 @@ export default class ShadowsLesson extends LessonSetupMixin {
 
     gui!: GUI;
 
-    mounted() {
+    async mounted() {
         this.canvas = this.$refs.canvas as HTMLCanvasElement;
         this.setUpSizes();
         this.setUp();
@@ -61,7 +61,7 @@ export default class ShadowsLesson extends LessonSetupMixin {
         // this.useBakedShadow();
         // this.useMovingBakedShadow();
 
-        this.addGui();
+        await this.addGui();
         this.setUpGui();
 
         this.setUpOrbitControls();
@@ -71,7 +71,7 @@ export default class ShadowsLesson extends LessonSetupMixin {
 
     addObjects() {
         const material = new THREE.MeshStandardMaterial();
-        material.roughness = 0.8;
+        material.roughness = 0.6;
         material.side = THREE.DoubleSide;
 
         // Save the material to add it to the GUI later
@@ -96,7 +96,7 @@ export default class ShadowsLesson extends LessonSetupMixin {
 
     addLights() {
         // Ambient Light
-        this.ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        this.ambientLight = new THREE.AmbientLight(0xffffff, 0.25);
         this.scene.add(this.ambientLight);
 
         // Directional Light
@@ -106,14 +106,14 @@ export default class ShadowsLesson extends LessonSetupMixin {
         this.scene.add(this.directionalLight);
 
         // Spot Light
-        this.spotLight = new THREE.SpotLight(0xffffff, 0.4, 10, Math.PI * 0.3);
+        this.spotLight = new THREE.SpotLight(0xffffff, 1.5, 10, 0.3);
         this.spotLight.position.set(0, 2, 2);
         this.spotLight.visible = false;
         this.scene.add(this.spotLight);
         this.scene.add(this.spotLight.target);
 
         // Point Light
-        this.pointLight = new THREE.PointLight(0xffffff, 0.4);
+        this.pointLight = new THREE.PointLight(0xffffff, 1);
         this.pointLight.position.set(-1, 2, 0.5);
         // this.pointLight.visible = false;
         this.scene.add(this.pointLight);
@@ -330,6 +330,7 @@ export default class ShadowsLesson extends LessonSetupMixin {
         const spotLightFolder = this.gui.addFolder("Spot Light");
         spotLightFolder.closed = false;
         spotLightFolder.add(this.spotLight, "visible");
+        spotLightFolder.add(this.spotLight, "intensity", 0, 5, 0.01);
         spotLightFolder
             .add(this.spotLight.shadow.camera, "fov", 0, 50, 0.1)
             .name("shadow fov");
@@ -341,6 +342,7 @@ export default class ShadowsLesson extends LessonSetupMixin {
         const pointLightFolder = this.gui.addFolder("Point Light");
         pointLightFolder.closed = false;
         pointLightFolder.add(this.pointLight, "visible");
+        pointLightFolder.add(this.pointLight, "intensity", 0, 2, 0.01);
         pointLightFolder
             .add(this.pointLightCameraHelper, "visible")
             .name("shadow helper");

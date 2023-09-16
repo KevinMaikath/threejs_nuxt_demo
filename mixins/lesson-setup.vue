@@ -83,10 +83,6 @@ export default class LessonSetupMixin extends Vue {
     protected setUpOrbitControls() {
         if (!this.$refs.canvas) return;
 
-        const {
-            OrbitControls,
-        } = require("three/examples/jsm/controls/OrbitControls");
-
         this.controls = new OrbitControls(
             this.camera,
             this.$refs.canvas as HTMLElement
@@ -96,7 +92,8 @@ export default class LessonSetupMixin extends Vue {
     }
 
     /**
-     * Create the resize listener callback and assign it to the window resize event.
+     * Create the resize listener callback and assign it to the window resize
+     * event.
      */
     setUpResizing() {
         this.resizeListener = () => {
@@ -113,10 +110,8 @@ export default class LessonSetupMixin extends Vue {
         window.addEventListener("resize", this.resizeListener);
     }
 
-    /**
-     * Clean listeners.
-     */
-    destroy() {
+    /** Clean listeners */
+    beforeDestroy() {
         if (this.resizeListener) {
             window.removeEventListener("resize", this.resizeListener);
         }
@@ -125,7 +120,8 @@ export default class LessonSetupMixin extends Vue {
     }
 
     /**
-     * Render the scene. I can' call this method "render" because that's something used in Vue
+     * Render the scene. I can' call this method "render" because that's
+     * something used in Vue.
      */
     play() {
         this.renderer.render(this.scene, this.camera);
@@ -133,8 +129,8 @@ export default class LessonSetupMixin extends Vue {
 
     /**
      * Set the animation function with the callback given as the parameter.
-     * The callback doesn't need to care about calling requestAnimationFrame inside of it,
-     * this method will handle that.
+     * The callback doesn't need to care about calling requestAnimationFrame
+     * inside of it, this method will handle that.
      *
      * @param func
      */
@@ -173,10 +169,13 @@ export default class LessonSetupMixin extends Vue {
 
     /**
      * Create a dat.GUI instance and save it in this.gui
-     * It will also remove the previous GUIs from the DOM if there's anyone (if we don't do that, we will add a new GUI
-     * everytime that the hot-reload is triggered).
+     * It will also remove the previous GUIs from the DOM if there's anyone (if
+     * we don't do that, we will add a new GUI everytime that the hot-reload is
+     * triggered).
      */
-    addGui() {
+    async addGui() {
+        if (!process.client) return;
+
         const previousGui = document.querySelectorAll(".dg.main.a");
         for (const gui of previousGui) {
             gui.remove();
@@ -184,7 +183,7 @@ export default class LessonSetupMixin extends Vue {
 
         // The library dat.gui has to be imported locally to avoid the error
         // "window is not defined" on every page reload
-        const { GUI } = require("dat.gui");
+        const { GUI } = await import("dat.gui");
         this.gui = new GUI({ name: "main-gui" });
     }
 }

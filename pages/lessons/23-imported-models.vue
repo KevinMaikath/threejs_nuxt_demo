@@ -8,6 +8,8 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { GUI } from "dat.gui";
 import { AmbientLight, AnimationMixer, DirectionalLight, Mesh } from "three";
 import * as THREE from "three";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 import LessonSetupMixin from "~/mixins/lesson-setup.vue";
 
 @Component
@@ -96,9 +98,6 @@ export default class ImportedModelsLesson extends LessonSetupMixin {
     }
 
     addGLTFLoader() {
-        // Importing this at the beginning of the file was causing errors
-        const { GLTFLoader } = require("three/examples/jsm/loaders/GLTFLoader");
-
         this.gltfLoader = new GLTFLoader();
     }
 
@@ -180,11 +179,6 @@ export default class ImportedModelsLesson extends LessonSetupMixin {
      * we have to instantiate the Draco loader, so using it or not depends on your project.
      */
     loadModelsWithDraco() {
-        // Importing this at the beginning of the file was causing errors
-        const {
-            DRACOLoader,
-        } = require("three/examples/jsm/loaders/DRACOLoader");
-
         const dracoLoader = new DRACOLoader();
 
         // Set the path to the Web Assembly code

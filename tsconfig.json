@@ -1,43 +1,44 @@
 {
-  "compilerOptions": {
-    "target": "ES2015",
-    "module": "ES2015",
-    "moduleResolution": "Node",
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ES2015"
-    ],
-    "esModuleInterop": true,
-    "allowJs": false,
-    "sourceMap": true,
-    "strict": true,
-    "noEmit": true,
-    "experimentalDecorators": true,
-    "importHelpers": true,
-    "baseUrl": ".",
-    "paths": {
-      "~/*": [
-        "./*"
-      ],
-      "@/*": [
-        "./*"
-      ]
+    "compilerOptions": {
+        "target": "ES2018",
+        "module": "ESNext",
+        "moduleResolution": "Node",
+        "lib": [
+            "ESNext",
+            "ESNext.AsyncIterable",
+            "DOM",
+            "DOM.Iterable"
+        ],
+        "esModuleInterop": true,
+        "allowJs": false,
+        "sourceMap": true,
+        "strict": true,
+        "noEmit": true,
+        "experimentalDecorators": true,
+        "importHelpers": true,
+        "baseUrl": ".",
+        "paths": {
+            "~/*": [
+                "./*"
+            ],
+            "@/*": [
+                "./*"
+            ]
+        },
+        "types": [
+            "@types/node",
+            "@types/vuelidate",
+            "@nuxt/types",
+            "@nuxtjs/axios",
+            "@nuxtjs/toast",
+            "@nuxtjs/vuetify",
+            "./node_modules/@types/"
+        ],
+        "noImplicitAny": false
     },
-    "types": [
-      "@types/node",
-      "@types/vuelidate",
-      "@nuxt/types",
-      "@nuxtjs/axios",
-      "@nuxtjs/toast",
-      "@nuxtjs/vuetify",
-      "./node_modules/@types/"
-    ],
-    "noImplicitAny": false
-  },
-  "exclude": [
-    "node_modules",
-    ".nuxt",
-    "dist"
-  ]
+    "exclude": [
+        "node_modules",
+        ".nuxt",
+        "dist"
+    ]
 }

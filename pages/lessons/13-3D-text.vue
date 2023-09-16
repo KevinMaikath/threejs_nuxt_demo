@@ -45,9 +45,6 @@ export default class ThreeDTextLesson extends LessonSetupMixin {
     }
 
     setUpFontLoader() {
-        // We can't use FontLoad from THREE.FontLoad
-        const { FontLoader } = require("three/examples/jsm/loaders/FontLoader");
-
         // We can use one FontLoader to load multiple fonts.
         this.fontLoader = new FontLoader();
     }
@@ -59,11 +56,6 @@ export default class ThreeDTextLesson extends LessonSetupMixin {
     }
 
     setUpTextGeometry() {
-        // We can't use TextBufferGeometry from THREE.TextBufferGeometry
-        const {
-            TextGeometry,
-        } = require("three/examples/jsm/geometries/TextGeometry");
-
         /**
          * In terms of performance, the lower the curveSegments and bevelSegments the better. That will get us a
          * low-polly result but with better performance.
@@ -161,5 +153,3 @@ export default class ThreeDTextLesson extends LessonSetupMixin {
     }
 }
 </script>
-
-<style scoped lang="scss"></style>
