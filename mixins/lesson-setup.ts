@@ -1,4 +1,3 @@
-<script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
 import * as THREE from "three";
@@ -187,4 +186,3 @@ export default class LessonSetupMixin extends Vue {
         this.gui = new GUI({ name: "main-gui" });
     }
 }
-</script>

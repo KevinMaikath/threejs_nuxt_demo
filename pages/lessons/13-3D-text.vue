@@ -9,7 +9,7 @@ import { Font, FontLoader } from "three/examples/jsm/loaders/FontLoader";
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
 import * as THREE from "three";
 import { Mesh, MeshMatcapMaterial, Texture, TextureLoader } from "three";
-import LessonSetupMixin from "~/mixins/lesson-setup.vue";
+import LessonSetupMixin from "~/mixins/lesson-setup";
 
 @Component
 export default class ThreeDTextLesson extends LessonSetupMixin {

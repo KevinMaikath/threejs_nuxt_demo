@@ -7,7 +7,7 @@ import Component from "vue-class-component";
 import { Clock, OrthographicCamera, PerspectiveCamera } from "three";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import LessonSetupMixin from "~/mixins/lesson-setup.vue";
+import LessonSetupMixin from "~/mixins/lesson-setup";
 
 type LessonListener = "mousemove";
 

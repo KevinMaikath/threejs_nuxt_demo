@@ -9,7 +9,7 @@ import { GUI } from "dat.gui";
 import * as THREE from "three";
 import { AmbientLight, DirectionalLight, Mesh } from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import LessonSetupMixin from "~/mixins/lesson-setup.vue";
+import LessonSetupMixin from "~/mixins/lesson-setup";
 
 @Component
 export default class CustomBlenderModels extends LessonSetupMixin {

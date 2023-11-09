@@ -7,7 +7,7 @@ import Component from "vue-class-component";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { GUI } from "dat.gui";
 import { gsap } from "gsap";
-import LessonSetupMixin from "~/mixins/lesson-setup.vue";
+import LessonSetupMixin from "~/mixins/lesson-setup";
 
 @Component
 export default class DebugLesson extends LessonSetupMixin {

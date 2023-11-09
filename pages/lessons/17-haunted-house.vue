@@ -16,7 +16,7 @@ import {
     Texture,
     Vector3,
 } from "three";
-import LessonSetupMixin from "~/mixins/lesson-setup.vue";
+import LessonSetupMixin from "~/mixins/lesson-setup";
 import { setUv2Map } from "~/utils/textures";
 import { randomNumberFromInterval } from "~/utils/random";
 

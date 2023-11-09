@@ -13,7 +13,7 @@ import {
     PerspectiveCamera,
 } from "three";
 import * as THREE from "three";
-import LessonSetupMixin from "~/mixins/lesson-setup.vue";
+import LessonSetupMixin from "~/mixins/lesson-setup";
 
 @Component
 export default class GeometriesLesson extends LessonSetupMixin {

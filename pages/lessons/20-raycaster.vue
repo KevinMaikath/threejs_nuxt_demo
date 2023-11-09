@@ -20,7 +20,7 @@ import {
 } from "three";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import LessonSetupMixin from "~/mixins/lesson-setup.vue";
+import LessonSetupMixin from "~/mixins/lesson-setup";
 import { removeAllListeners, WindowListenersMap } from "~/types/dom";
 
 type BasicSphereMesh = Mesh<SphereGeometry, MeshBasicMaterial>;

@@ -7,7 +7,7 @@ import Component from "vue-class-component";
 import * as THREE from "three";
 import { Clock } from "three";
 import { gsap } from "gsap";
-import LessonSetupMixin from "~/mixins/lesson-setup.vue";
+import LessonSetupMixin from "~/mixins/lesson-setup";
 
 @Component
 export default class AnimationsLesson extends LessonSetupMixin {

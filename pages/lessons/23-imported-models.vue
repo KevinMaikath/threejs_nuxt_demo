@@ -10,7 +10,7 @@ import { AmbientLight, AnimationMixer, DirectionalLight, Mesh } from "three";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
-import LessonSetupMixin from "~/mixins/lesson-setup.vue";
+import LessonSetupMixin from "~/mixins/lesson-setup";
 
 @Component
 export default class ImportedModelsLesson extends LessonSetupMixin {

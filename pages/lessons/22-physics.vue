@@ -22,7 +22,7 @@ import {
     Vector3,
 } from "three";
 import CANNON, { Body, ICollisionEvent, World } from "cannon";
-import LessonSetupMixin from "~/mixins/lesson-setup.vue";
+import LessonSetupMixin from "~/mixins/lesson-setup";
 import {
     cannonQuaternionToThreeQuaternion,
     vec3ToVector3,

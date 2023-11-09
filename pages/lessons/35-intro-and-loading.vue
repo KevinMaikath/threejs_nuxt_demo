@@ -29,7 +29,7 @@ import {
 } from "three";
 import { gsap } from "gsap";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import LessonSetupMixin from "~/mixins/lesson-setup.vue";
+import LessonSetupMixin from "~/mixins/lesson-setup";
 
 @Component
 export default class IntroAndLoadingLesson extends LessonSetupMixin {

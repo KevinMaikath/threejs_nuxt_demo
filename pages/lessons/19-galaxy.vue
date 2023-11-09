@@ -8,7 +8,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { GUI } from "dat.gui";
 import * as THREE from "three";
 import { BufferGeometry, PointsMaterial, BufferAttribute, Points } from "three";
-import LessonSetupMixin from "~/mixins/lesson-setup.vue";
+import LessonSetupMixin from "~/mixins/lesson-setup";
 
 @Component
 export default class GalaxyLesson extends LessonSetupMixin {

@@ -6,7 +6,7 @@
 import Component from "vue-class-component";
 import * as THREE from "three";
 import { AxesHelper, BoxGeometry, Group, Mesh, MeshBasicMaterial } from "three";
-import LessonSetupMixin from "~/mixins/lesson-setup.vue";
+import LessonSetupMixin from "~/mixins/lesson-setup";
 
 @Component
 export default class TransformObjectsLesson extends LessonSetupMixin {

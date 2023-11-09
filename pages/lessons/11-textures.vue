@@ -7,7 +7,7 @@ import Component from "vue-class-component";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import * as THREE from "three";
 import { LoadingManager, Texture, TextureLoader } from "three";
-import LessonSetupMixin from "~/mixins/lesson-setup.vue";
+import LessonSetupMixin from "~/mixins/lesson-setup";
 
 @Component
 export default class TexturesLesson extends LessonSetupMixin {

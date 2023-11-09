@@ -17,7 +17,7 @@ import {
     SpotLight,
 } from "three";
 import { GUI } from "dat.gui";
-import LessonSetupMixin from "~/mixins/lesson-setup.vue";
+import LessonSetupMixin from "~/mixins/lesson-setup";
 
 @Component
 export default class ShadowsLesson extends LessonSetupMixin {

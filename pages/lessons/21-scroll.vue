@@ -30,7 +30,7 @@ import {
     Vector2,
 } from "three";
 import gsap from "gsap";
-import LessonSetupMixin from "~/mixins/lesson-setup.vue";
+import LessonSetupMixin from "~/mixins/lesson-setup";
 import { removeAllListeners, WindowListenersMap } from "~/types/dom";
 
 @Component({ layout: "default" })
